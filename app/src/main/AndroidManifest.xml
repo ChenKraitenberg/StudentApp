@@ -13,7 +13,8 @@
         android:theme="@style/Theme.StudentsApp">
 
         <!-- מסך ראשי -->
-        <activity android:name=".activities.StudentsListActivity"
+        <activity
+            android:name=".activities.StudentsListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <!-- מסכים נוספים (מומלץ להוסיף בהמשך) -->
-<!--        <activity android:name=".activities.NewStudentActivity" />-->
+        <!-- מסכים נוספים -->
+        <activity android:name=".activities.NewStudentActivity" />
         <activity android:name=".activities.StudentDetailsActivity" />
         <activity android:name=".activities.EditStudentActivity" />
 
