@@ -1,15 +1,19 @@
 package com.example.studentsapp.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studentsapp.R
 import com.example.studentsapp.adapters.StudentsAdapter
 import com.example.studentsapp.models.Student
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StudentsListActivity : AppCompatActivity() {
 
@@ -18,23 +22,31 @@ class StudentsListActivity : AppCompatActivity() {
     private val studentsList = mutableListOf<Student>()
 
     private val DETAILS_REQUEST_CODE = 2
-    private  val REQUEST_CODE_NEW_STUDENT = 1
-
+    private val REQUEST_CODE_NEW_STUDENT = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students_list)
 
-        // כפתור לפתיחת מסך "New Student"
-        val addStudentButton = findViewById<Button>(R.id.add_student_button)
-        addStudentButton.setOnClickListener {
-            val intent = Intent(this, NewStudentActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_NEW_STUDENT)
-        }
+        // Initialize Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        title = "Students List"
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Add divider between items
+        val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        recyclerView.addItemDecoration(dividerItemDecoration)
+
+        // Set up FloatingActionButton
+        val addStudentButton = findViewById<FloatingActionButton>(R.id.add_student_button)
+        addStudentButton.setOnClickListener {
+            val intent = Intent(this, NewStudentActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_NEW_STUDENT)
+        }
 
         // Load dummy data
         loadStudents()
@@ -45,7 +57,6 @@ class StudentsListActivity : AppCompatActivity() {
             intent.putExtra("STUDENT", student)
             startActivityForResult(intent, DETAILS_REQUEST_CODE)
         }
-
         recyclerView.adapter = studentsAdapter
     }
 
@@ -58,10 +69,10 @@ class StudentsListActivity : AppCompatActivity() {
             REQUEST_CODE_NEW_STUDENT -> {
                 if (resultCode == RESULT_OK) {
                     val newStudent = data?.getParcelableExtra<Student>("newStudent")
-                    if (newStudent != null) {
-                        studentsList.add(newStudent)
+                    newStudent?.let {
+                        studentsList.add(it)
                         studentsAdapter.notifyItemInserted(studentsList.size - 1)
-                        Log.d("StudentsListActivity", "New student added: ${newStudent.name}")
+                        Log.d("StudentsListActivity", "New student added: ${it.name}")
                     }
                 }
             }
@@ -81,16 +92,13 @@ class StudentsListActivity : AppCompatActivity() {
                     }
                     RESULT_FIRST_USER -> {
                         val deletedStudentId = data?.getStringExtra("DELETE_STUDENT_ID")
-                        Log.d("StudentsListActivity", "Received delete request for ID: $deletedStudentId")
-
-                        val index = studentsList.indexOfFirst { student -> student.id == deletedStudentId }
-                        if (index != -1) {
-                            Log.d("StudentsListActivity", "List before deletion: ${studentsList.map { it.id }}")
-                            studentsList.removeAt(index)
-                            studentsAdapter.notifyItemRemoved(index)
-                            Log.d("StudentsListActivity", "List after deletion: ${studentsList.map { it.id }}")
-                        } else {
-                            Log.d("StudentsListActivity", "Student with ID $deletedStudentId not found")
+                        deletedStudentId?.let { id ->
+                            val index = studentsList.indexOfFirst { student -> student.id == id }
+                            if (index != -1) {
+                                studentsList.removeAt(index)
+                                studentsAdapter.notifyItemRemoved(index)
+                                Log.d("StudentsListActivity", "Student deleted with ID: $id")
+                            }
                         }
                     }
                 }
@@ -98,10 +106,8 @@ class StudentsListActivity : AppCompatActivity() {
         }
     }
 
-
     private fun loadStudents() {
-        // Add some dummy students
-        studentsList.add(Student("John Doe", "123456789", "050-1234567", "Tel Aviv"))
-        studentsList.add(Student("Jane Smith", "987654321", "054-7654321", "Jerusalem"))
+        studentsList.add(Student("John Doe", "207654982", "050-1234567", "Tel Aviv"))
+        studentsList.add(Student("David Smith", "206897414", "054-7654321", "Jerusalem"))
     }
 }

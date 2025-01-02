@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<!--<resources>-->
+<!--    <style name="Theme.StudentsApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        <item name="colorPrimary">@color/purple_500</item>-->
+<!--        <item name="colorPrimaryVariant">@color/purple_700</item>-->
+<!--        <item name="colorOnPrimary">@color/white</item>-->
+<!--        <item name="android:fontFamily">@font/roboto_bold</item>-->
+<!--    </style>-->
 
+<!--</resources>-->
+
+<resources>
+    <style name="Theme.StudentsApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+    </style>
 </resources>
+

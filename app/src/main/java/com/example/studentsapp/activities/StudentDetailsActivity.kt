@@ -3,10 +3,12 @@ package com.example.studentsapp.activities
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.studentsapp.R
 import com.example.studentsapp.models.Student
 
@@ -28,6 +30,14 @@ class StudentDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_details)
 
+        // Initialize toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        // Enable back button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+
         // חיבור רכיבי ה-XML
         studentImageView = findViewById(R.id.studentImageView)
         nameTextView = findViewById(R.id.nameTextView)
@@ -35,7 +45,7 @@ class StudentDetailsActivity : AppCompatActivity() {
         phoneTextView = findViewById(R.id.phoneTextView)
         addressTextView = findViewById(R.id.addressTextView)
         editButton = findViewById(R.id.editButton)
-        backButton = findViewById(R.id.backButton)
+        //backButton = findViewById(R.id.backButton)
 
         // קבלת הנתונים
         student = intent.getParcelableExtra("STUDENT")
@@ -54,10 +64,6 @@ class StudentDetailsActivity : AppCompatActivity() {
             startActivityForResult(intent, EDIT_REQUEST_CODE)
         }
 
-        // כפתור חזרה לרשימת הסטודנטים
-        backButton.setOnClickListener {
-            finish()
-        }
     }
 
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,5 +102,15 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         }
     }
 }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed() // פעולה שמחזירה לפעילות הקודמת
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
 }

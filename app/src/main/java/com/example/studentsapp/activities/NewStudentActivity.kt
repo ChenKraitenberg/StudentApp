@@ -2,12 +2,14 @@ package com.example.studentsapp.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.studentsapp.R
@@ -19,6 +21,14 @@ class NewStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_student)
 
+        // Initialize toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        // Enable back button
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
+
         val nameInput = findViewById<EditText>(R.id.student_name)
         val idInput = findViewById<EditText>(R.id.student_id)
         val phoneInput = findViewById<EditText>(R.id.student_phone)
@@ -27,7 +37,6 @@ class NewStudentActivity : AppCompatActivity() {
 
         val saveButton = findViewById<Button>(R.id.save_button)
         val cancelButton = findViewById<Button>(R.id.cancel_button)
-        val backButton = findViewById<Button>(R.id.back_button)
 
         // SaveButton
         saveButton.setOnClickListener {
@@ -54,9 +63,19 @@ class NewStudentActivity : AppCompatActivity() {
             finish()
         }
 
-        // BackButton
-        backButton.setOnClickListener {
-            finish()
+//        // BackButton
+//        backButton.setOnClickListener {
+//            finish()
+//        }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed() // פעולה שמחזירה לפעילות הקודמת
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
+
 }
