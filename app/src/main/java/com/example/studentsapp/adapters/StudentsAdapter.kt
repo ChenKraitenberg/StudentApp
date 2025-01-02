@@ -1,6 +1,5 @@
 package com.example.studentsapp.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +37,10 @@ class StudentsAdapter(
         private val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
 
         fun bind(student: Student) {
+            studentImageView.setImageResource(R.drawable.ic_contact)
             nameTextView.text = student.name
             idTextView.text = student.id
-            studentImageView.setImageResource(R.drawable.ic_contact) // הגדרת תמונה גנרית
-
+            checkBox.isChecked = student.isChecked
         }
     }
 }

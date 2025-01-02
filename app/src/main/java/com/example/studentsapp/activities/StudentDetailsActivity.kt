@@ -20,7 +20,6 @@ class StudentDetailsActivity : AppCompatActivity() {
     private lateinit var phoneTextView: TextView
     private lateinit var addressTextView: TextView
     private lateinit var editButton: Button
-    private lateinit var backButton: Button
 
     private var student: Student? = null
 

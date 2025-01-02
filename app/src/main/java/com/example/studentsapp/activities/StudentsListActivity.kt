@@ -1,10 +1,8 @@
 package com.example.studentsapp.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -41,7 +39,7 @@ class StudentsListActivity : AppCompatActivity() {
         val dividerItemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         recyclerView.addItemDecoration(dividerItemDecoration)
 
-        // Set up FloatingActionButton
+        // Set up FloatingActionButton - Add Student Button to open NewStudentActivity
         val addStudentButton = findViewById<FloatingActionButton>(R.id.add_student_button)
         addStudentButton.setOnClickListener {
             val intent = Intent(this, NewStudentActivity::class.java)
@@ -109,5 +107,9 @@ class StudentsListActivity : AppCompatActivity() {
     private fun loadStudents() {
         studentsList.add(Student("John Doe", "207654982", "050-1234567", "Tel Aviv"))
         studentsList.add(Student("David Smith", "206897414", "054-7654321", "Jerusalem"))
+        studentsList.add(Student("Michael Johnson", "208765432", "052-1234567", "Haifa"))
+        studentsList.add(Student("Chris Lee", "209876543", "053-7654321", "Eilat"))
+        studentsList.add(Student("Tom Brown", "201234567", "051-1234567", "Ashdod"))
+
     }
 }

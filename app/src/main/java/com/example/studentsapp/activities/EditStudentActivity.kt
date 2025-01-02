@@ -79,7 +79,7 @@ class EditStudentActivity : AppCompatActivity() {
             }
         }
     }
-
+    // פעולה להחזרת פעולת החזרה על ידי לחיצה על כפתור החזרה בסרגל הכלים
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
